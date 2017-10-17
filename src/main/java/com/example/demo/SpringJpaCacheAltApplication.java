@@ -18,10 +18,10 @@ public class SpringJpaCacheAltApplication {
 	InitializingBean saveData(final EmployeeRepository repo) {
 		return new InitializingBean() {
 			public void afterPropertiesSet() throws Exception {
-				repo.save(new Employee("Gita", "Subramaniam", "Jr"));
-				repo.save(new Employee("Krishna", "Subramaniam", "Jr"));
-				repo.save(new Employee("Krishna", "Yadava", "Sr"));
-				repo.save(new Employee("Bhavani", "Lalitha", "Sr"));
+				repo.save(new Employee("David", "Sullivan", "Jr"));
+				repo.save(new Employee("Swagata", "Roy", "Ms"));
+				repo.save(new Employee("Berti", "Jalon", "Sr"));
+				repo.save(new Employee("Bong", "Samson", "Sr"));
 			}
 
 		};

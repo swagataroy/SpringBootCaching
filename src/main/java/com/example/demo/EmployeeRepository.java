@@ -6,20 +6,28 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.repository.CrudRepository;
 
-public interface EmployeeRepository extends CrudRepository<Employee,Long> {
-	
-	@CachePut(value="byId", key = "#result.id")
+public interface EmployeeRepository extends CrudRepository<Employee, Long> {
+
+	@CachePut(value = "byId", key = "#result.id")
 	<S extends Employee> S save(S entity);
-	
-	
-	//@Caching(evict ={@CacheEvict("byId"),@CacheEvict(value="byLastName",key="#p0")})
-	@CacheEvict("byId")
+
+	// @Caching(evict
+	// ={@CacheEvict("byId"),@CacheEvict(value="byLastName",key="#p0")})
+	//@CacheEvict("byId")
+	 @Caching(evict ={@CacheEvict("byId"),@CacheEvict(cacheNames = "byLastName")})
 	void delete(Long id);
 
-	@Cacheable(cacheNames ="byLastName",unless="#result == null")
+	@Cacheable(cacheNames = "byLastName", unless = "#result == null")
 	Employee findByLastName(String lastName);
-	
-	@Cacheable(value= "byId", unless="#result == null")
+
+	@Cacheable(value = "byId", unless = "#result == null")
 	Employee findOne(Long id);
+
+	
+	//@CacheEvict("byId"),@CacheEvict(value="byLastName",key="#p0"))
+     //@Caching(evict ={@CacheEvict("byId"),@CacheEvict(value="byLastName",key="#p0")})
+     @Caching(evict ={@CacheEvict("byId"),@CacheEvict(cacheNames = "byLastName")})
+	//@CacheEvict("byId")
+	void deleteByLastName(Long id);
 
 }
