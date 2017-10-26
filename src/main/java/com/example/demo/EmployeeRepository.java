@@ -13,8 +13,9 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
 	// @Caching(evict
 	// ={@CacheEvict("byId"),@CacheEvict(value="byLastName",key="#p0")})
-	//@CacheEvict("byId")
-	 @Caching(evict ={@CacheEvict("byId"),@CacheEvict(cacheNames = "byLastName")})
+	 //@CacheEvict("byId")
+	//Trying to delete both byId and byLastName cache
+	@Caching(evict ={@CacheEvict("byId"),@CacheEvict(cacheNames =  "byLastName")})
 	void delete(Long id);
 
 	@Cacheable(cacheNames = "byLastName", unless = "#result == null")
@@ -23,11 +24,27 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 	@Cacheable(value = "byId", unless = "#result == null")
 	Employee findOne(Long id);
 
-	
-	//@CacheEvict("byId"),@CacheEvict(value="byLastName",key="#p0"))
-     //@Caching(evict ={@CacheEvict("byId"),@CacheEvict(value="byLastName",key="#p0")})
-     @Caching(evict ={@CacheEvict("byId"),@CacheEvict(cacheNames = "byLastName")})
+	// @CacheEvict("byId"),@CacheEvict(value="byLastName",key="#p0"))
+	// @Caching(evict
+	// ={@CacheEvict("byId"),@CacheEvict(value="byLastName",key="#p0")})
+	// @Caching(evict ={@CacheEvict("byId"),@CacheEvict(cacheNames =
+	// "byLastName")})
+	// @CacheEvict("byId")
+	@Caching(evict = { @CacheEvict("byId"), @CacheEvict(value = "employee", key = "#LastName") })
+	void deleteByLastName(String name);
+
 	//@CacheEvict("byId")
-	void deleteByLastName(Long id);
+	// @Caching(evict ={@CacheEvict("byLastName"
+	//@CacheEvict(value="byLastName", allEntries=true)
+	//void deleteByLastNameAgain(Long id);
+	
+	//reset by LastName	
+	//@CacheEvict(value = "byLastName", allEntries = true)
+	@CacheEvict(value = { "byId", "byLastName" }, allEntries = true)
+	  public default void resetAllEntries() {
+	    // Intentionally blank
+	  }
+	
+	
 
 }

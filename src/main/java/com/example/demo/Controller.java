@@ -85,15 +85,23 @@ public class Controller {
 		sw.stop();
 		System.out.println("Deleting from the byId cache");
 		sw.start("Checking the byId cache for empoyee 4");
-		repo.delete(4L);
-		//repo.deleteByLastName(4L);
+		
+		repo.delete(4L);		
+		//repo.deleteByLastName("Samson");
 		System.out.println("The employee 4 after deletion from the byId cache is " + repo.findOne(4L));
 		sw.stop();
-		sw.start("Getting the employee by last name again");
-		System.out.println("The 4th employee from the byLastName cache is " + repo.findByLastName("Samson"));
-		sw.stop();
+		
+		
+
+		/*sw.start("Getting employee by last name");
+		This still fetches the last name record
+		System.out.println("The employee by last name Samson after calling delete is " + repo.findByLastName("Samson"));
+		sw.stop();*/
+		sw.start("Getting employee by last name again 2222");
+		repo.resetAllEntries();
+		System.out.println("The employee by last name Samson after calling reset is " + repo.findByLastName("Samson"));
 		System.out.println(sw.prettyPrint());
-		return "Done";
+	    return "Done";
 	}
 
 }
